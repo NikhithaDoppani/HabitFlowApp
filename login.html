@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - HabitFlow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">
+          <i data-lucide="target"></i>
+        </div>
+        <span class="auth-logo-text">HabitFlow</span>
+      </div>
+
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Sign in to continue building better habits</p>
+
+      <form class="auth-form" onsubmit="AuthForms.handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="Enter your email"
+              required
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            >
+            <button
+              type="button"
+              onclick="AuthForms.togglePassword('password')"
+              style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-tertiary);"
+            >
+              <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="form-checkbox">
+            <input type="checkbox" id="rememberMe">
+            <span>Remember me</span>
+          </label>
+          <a href="forgot-password.html" style="font-size: var(--font-size-sm);">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg">
+          <i data-lucide="log-in"></i>
+          Sign In
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p style="color: rgba(255,255,255,0.7); font-size: var(--font-size-sm);">
+          Don't have an account?
+          <a href="register.html">Create one</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Check if already logged in
+    if (Auth.checkSession()) {
+      window.location.href = 'dashboard.html';
+    }
+    // Initialize icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

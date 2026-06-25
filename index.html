@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitFlow - Build Better Habits</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* Landing page specific styles */
+    .landing-page {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .landing-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-hero);
+      z-index: -2;
+    }
+
+    .landing-page::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    .landing-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: var(--z-fixed);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .landing-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-display);
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+
+    .landing-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-500);
+    }
+
+    .landing-nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .landing-nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition-fast);
+    }
+
+    .landing-nav-links a:hover {
+      color: white;
+    }
+
+    .landing-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-20) var(--space-6);
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-6);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-xl);
+      opacity: 0.9;
+      margin-bottom: var(--space-10);
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn-primary {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      background: white;
+      color: var(--primary-600);
+      border-radius: var(--radius-xl);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-btn-secondary {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: var(--radius-xl);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .landing-features {
+      padding: var(--space-20) var(--space-6);
+      background: var(--bg-primary);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .features-title {
+      font-family: var(--font-display);
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .features-subtitle {
+      font-size: var(--font-size-lg);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      padding: var(--space-6);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition-base);
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px var(--shadow-color);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-xl);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+      color: white;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .feature-description {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .landing-cta {
+      padding: var(--space-20) var(--space-6);
+      background: var(--gradient-hero);
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-subtitle {
+      font-size: var(--font-size-lg);
+      opacity: 0.9;
+      margin-bottom: var(--space-8);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .landing-footer {
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      background: var(--bg-primary);
+      color: var(--text-tertiary);
+      font-size: var(--font-size-sm);
+    }
+
+    @media (max-width: 768px) {
+      .landing-nav-links {
+        gap: var(--space-2);
+      }
+
+      .landing-nav-links a {
+        font-size: var(--font-size-sm);
+      }
+
+      .hero-subtitle {
+        font-size: var(--font-size-base);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-btn-primary,
+      .hero-btn-secondary {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="landing-page">
+  <!-- Navigation -->
+  <nav class="landing-nav">
+    <a href="index.html" class="landing-logo">
+      <div class="landing-logo-icon">
+        <i data-lucide="target"></i>
+      </div>
+      HabitFlow
+    </a>
+    <div class="landing-nav-links">
+      <a href="#features">Features</a>
+      <a href="login.html">Sign In</a>
+      <a href="register.html" class="hero-btn-secondary" style="padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm);">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="hero-content animate-fade-in-up">
+      <div class="hero-badge">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+        <span>Build Better Habits Today</span>
+      </div>
+
+      <h1 class="hero-title">
+        Track Habits.<br>
+        Build Momentum.<br>
+        Achieve Goals.
+      </h1>
+
+      <p class="hero-subtitle">
+        A beautiful habit tracker that helps you build positive habits, break bad ones,
+        and stay motivated with streaks, achievements, and insightful analytics.
+      </p>
+
+      <div class="hero-actions">
+        <a href="register.html" class="hero-btn-primary">
+          <i data-lucide="rocket"></i>
+          Start Free Today
+        </a>
+        <a href="login.html" class="hero-btn-secondary">
+          <i data-lucide="log-in"></i>
+          Sign In
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="landing-features" id="features">
+    <div class="features-container">
+      <div class="features-header">
+        <h2 class="features-title">Everything You Need to Build Great Habits</h2>
+        <p class="features-subtitle">
+          Simple yet powerful features designed to help you stay consistent and motivated.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="list-checks"></i>
+          </div>
+          <h3 class="feature-title">Habit Tracking</h3>
+          <p class="feature-description">
+            Create daily, weekly, or monthly habits. Set reminders and categories to organize your goals.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="flame"></i>
+          </div>
+          <h3 class="feature-title">Streak System</h3>
+          <p class="feature-description">
+            Track consecutive days and watch your streaks grow. Stay motivated to never break the chain.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="calendar"></i>
+          </div>
+          <h3 class="feature-title">Calendar View</h3>
+          <p class="feature-description">
+            Visualize your progress with a beautiful calendar and GitHub-style activity heatmap.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="bar-chart-3"></i>
+          </div>
+          <h3 class="feature-title">Analytics</h3>
+          <p class="feature-description">
+            Gain insights with charts and statistics. See your completion rates and trends over time.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="trophy"></i>
+          </div>
+          <h3 class="feature-title">Achievements</h3>
+          <p class="feature-description">
+            Unlock badges and achievements as you progress. Celebrate milestones big and small.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="bell"></i>
+          </div>
+          <h3 class="feature-title">Reminders</h3>
+          <p class="feature-description">
+            Set customizable reminders for each habit. Never forget to work on your goals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="landing-cta">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Transform Your Life?</h2>
+      <p class="cta-subtitle">
+        Join thousands of people who are building better habits and achieving their goals.
+      </p>
+      <a href="register.html" class="hero-btn-primary">
+        <i data-lucide="zap"></i>
+        Get Started for Free
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>Made with care using vanilla HTML, CSS & JavaScript.</p>
+    <p style="margin-top: var(--space-2);">HabitFlow - Build Better Habits, One Day at a Time.</p>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Check if already logged in
+    const user = localStorage.getItem('habitTracker_user');
+    if (user) {
+      // User is logged in, redirect to dashboard
+      window.location.href = 'dashboard.html';
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('.landing-nav');
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(255, 255, 255, 0.95)';
+        nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        nav.style.background = 'rgba(255, 255, 255, 0.1)';
+        nav.style.boxShadow = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

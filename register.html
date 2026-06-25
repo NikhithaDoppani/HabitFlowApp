@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - HabitFlow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">
+          <i data-lucide="target"></i>
+        </div>
+        <span class="auth-logo-text">HabitFlow</span>
+      </div>
+
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-subtitle">Start building better habits today</p>
+
+      <form class="auth-form" onsubmit="AuthForms.handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="user" class="input-icon"></i>
+            <input
+              type="text"
+              id="name"
+              class="form-input"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+              minlength="2"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="Enter your email"
+              required
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Create a password"
+              required
+              autocomplete="new-password"
+              minlength="6"
+            >
+            <button
+              type="button"
+              onclick="AuthForms.togglePassword('password')"
+              style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-tertiary);"
+            >
+              <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+            </button>
+          </div>
+          <div class="form-hint">Password must be at least 6 characters</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-input"
+              placeholder="Confirm your password"
+              required
+              autocomplete="new-password"
+              minlength="6"
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full btn-lg">
+          <i data-lucide="user-plus"></i>
+          Create Account
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p style="color: rgba(255,255,255,0.7); font-size: var(--font-size-sm);">
+          Already have an account?
+          <a href="login.html">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Check if already logged in
+    if (Auth.checkSession()) {
+      window.location.href = 'dashboard.html';
+    }
+    // Initialize icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
