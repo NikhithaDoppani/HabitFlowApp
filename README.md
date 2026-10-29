@@ -226,6 +226,17 @@ Stored Data:
 No backend or database is required.
 
 ---
+## Daily Habit Summary
+
+The Daily Habit Summary feature helps users track their daily progress.
+
+### Features
+- **Total Habits:** Displays the total number of habits for the logged-in user.
+- **Completed Today:** Displays the number of habits completed today.
+- **Pending Today:** Displays the number of habits not yet completed today.
+
+### Implementation
+The summary is implemented in `habits.js` and calculates daily progress using the user's habits and completion logs.
 
 ## 📱 Responsive Design
 
