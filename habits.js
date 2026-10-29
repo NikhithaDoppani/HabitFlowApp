@@ -55,6 +55,24 @@ const Habits = {
       </div>
 
       <!-- Sort Dropdown -->
+      <!-- Daily Habit Summary -->
+<div class="stats-grid" id="dailyHabitSummary"
+     style="margin-bottom: var(--space-5);">
+  <div class="stat-card">
+    <div class="stat-label">Total Habits</div>
+    <div class="stat-value" id="totalHabits">0</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Completed Today</div>
+    <div class="stat-value" id="completedHabits">0</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Pending Today</div>
+    <div class="stat-value" id="pendingHabits">0</div>
+  </div>
+</div>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5);">
         <div style="display: flex; align-items: center; gap: var(--space-2);">
           <span style="color: var(--text-tertiary); font-size: var(--font-size-sm);">Sort by:</span>
@@ -85,7 +103,30 @@ const Habits = {
     const userHabits = habits.filter(h => h.userId === App.currentUser?.id);
     const today = Utils.formatDate(new Date());
     const logs = Storage.getLogs();
+// Update daily habit summary
+const completedCount = userHabits.filter(habit =>
+  logs.some(log =>
+    log.habitId === habit.id &&
+    log.date === today &&
+    log.completed
+  )
+).length;
 
+const totalElement = document.getElementById('totalHabits');
+const completedElement = document.getElementById('completedHabits');
+const pendingElement = document.getElementById('pendingHabits');
+
+if (totalElement) {
+  totalElement.textContent = userHabits.length;
+}
+
+if (completedElement) {
+  completedElement.textContent = completedCount;
+}
+
+if (pendingElement) {
+  pendingElement.textContent = userHabits.length - completedCount;
+}
     // Apply filters and search
     let filteredHabits = this.filterHabits(userHabits, logs, today);
 
